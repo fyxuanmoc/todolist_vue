@@ -7,7 +7,7 @@
       <el-form-item >
         <el-rate v-model="value1"></el-rate>
       </el-form-item><el-form-item>
-      <el-button type="primary">添加</el-button>
+      <el-button v-on:click="addTodo" type="primary">添加</el-button>
     </el-form-item>
     </el-form>
     <div style="margin-left: 300px;margin-top: 100px">
@@ -44,36 +44,24 @@ export default {
   name: 'hello',
   data () {
     return {
+      input: ' ',
       value1: null,
-      tableData3: [{
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        address: '上海市普陀区金沙江路 1518 弄'
-      }],
       tableData1: [{thing: 'chifan'}],
       multipleSelection: []
     }
   },
 
   methods: {
-    toggleSelection (rows) {
-      if (rows) {
-        rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row)
+    addTodo () {
+      console.log(1)
+      var body = {'thing': 'tete'}
+      this.$http.post('/add', body)
+        .then(function (response) {
+          console.log(response)
         })
-      } else {
-        this.$refs.multipleTable.clearSelection()
-      }
+        .catch(function (error) {
+          console.log(error)
+        })
     },
     handleSelectionChange (val) {
       this.multipleSelection = val
@@ -81,8 +69,7 @@ export default {
   },
   created: function () {
     let vm = this
-    this.$http.get('/find')
-    .then(function (response) {
+    this.$http.get('/allList').then(function (response) {
       console.log(response.data)
       vm.tableData1 = response.data
     })

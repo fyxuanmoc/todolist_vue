@@ -28,8 +28,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/find': {
-        target: 'http://localhost:8080',
+      '/*': {
+        target: 'http://localhost:8080/',
         changeOrigin: true
       }
     },
